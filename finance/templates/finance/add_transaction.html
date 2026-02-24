@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}Add Transaction{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <h2 class="fw-bold mb-1">Add Transaction</h2>
+    <p class="text-muted mb-4">Fill in the details below</p>
+
+    <div class="card shadow-sm p-4 border-0" style="border-radius: 16px;">
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Title -->
+            <div class="mb-3">
+                <label class="fw-semibold mb-1">Title</label>
+                <input type="text" name="title" class="form-control" placeholder="Enter title" required>
+            </div>
+
+            <!-- Amount -->
+            <div class="mb-3">
+                <label class="fw-semibold mb-1">Amount</label>
+                <input type="number" step="0.01" name="amount" class="form-control"
+                    placeholder="Enter amount" required>
+            </div>
+
+            <!-- Category -->
+            <div class="mb-3">
+                <label class="fw-semibold mb-1">Paid By</label>
+                <input type="text" name="category" class="form-control" placeholder="Name or ID" required>
+            </div>
+
+            <!-- Date -->
+            <div class="mb-3">
+                <label class="fw-semibold mb-1">Date</label>
+                <input type="date" id="dateField" name="date" class="form-control" required>
+            </div>
+
+            <!-- Image Upload -->
+            <div class="mb-3">
+                <label class="fw-semibold mb-1">Upload Image (Optional)</label>
+                <input type="file" name="image" class="form-control">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-dark w-100 py-2 fw-semibold"
+                style="border-radius: 10px;">
+                Add Transaction
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("dateField").value = today;
+    });
+</script>
+
+{% endblock %}
