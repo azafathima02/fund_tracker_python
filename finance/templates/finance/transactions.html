@@ -8,11 +8,12 @@
 
 <div class="d-flex gap-3 mb-3 flex-wrap">
     <select class="form-select" style="max-width: 200px;">
-        <option selected disabled>Select Month</option>
-        <option>January 2024</option>
-        <option>February 2024</option>
-        <option>March 2024</option>
-    </select>
+    <option selected disabled>Select Month</option>
+
+    {% for m in months %}
+        <option>{{ m }}</option>
+    {% endfor %}
+</select>
 
     <a href="{% url 'export-transactions-pdf' %}" 
        class="btn" style="background: var(--olive-depth); color:white;">⬇ Download PDF</a>
