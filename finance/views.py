@@ -6,24 +6,19 @@ from datetime import datetime
 from django.db.models import Sum
 from calendar import month_name
 
-# PDF libraries
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from reportlab.lib import colors
 
 
-def get_month_year_list():
-    """Generate month list dynamically up to current year."""
-    current_year = datetime.now().year
-    current_month = datetime.now().month
-
-    months = []
-    for y in range(current_year + 1):  # last 3 years + this year
-        for m in range(1, 13):
-            if y == current_year and m > current_month:
-                break
-            months.append({"value": f"{m}-{y}", "label": f"{month_name[m]} {y}"})
-
-    return months
+# ===========================
+# MONTH LIST (ONLY MONTH NAMES)
+# ===========================
+def get_month_list():
+    """Return list of months only."""
+    return [
+        {"value": m, "label": month_name[m]}
+        for m in range(1, 13)
+    ]
 
 
 def dashboard(request):
@@ -47,7 +42,7 @@ def dashboard(request):
         "total_expense": total_expense,
         "balance": balance,
         "form": form,
-        "months": get_month_year_list(),
+        "months": get_month_list(),  # only months
     }
 
     return render(request, "finance/dashboard.html", context)
@@ -58,9 +53,9 @@ def delete_transaction(request, id):
     return redirect('dashboard')
 
 
-# -------------------------------
-# PDF Export for ALL Transactions
-# -------------------------------
+# ===============================
+# EXPORT ALL TRANSACTIONS PDF
+# ===============================
 def export_transactions_pdf(request):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="transactions.pdf"'
@@ -108,17 +103,20 @@ def add_transaction(request):
     return render(request, "finance/add_transaction.html", {"form": form})
 
 
+# ===============================
+# ALL TRANSACTIONS PAGE
+# ===============================
 def all_transactions(request):
     transactions = Transaction.objects.all().order_by('-date')
     return render(request, "finance/transactions.html", {
         "transactions": transactions,
-        "months": get_month_year_list()
+        "months": get_month_list(),  # ONLY MONTHS
     })
 
 
-# -------------------------------
-# PDF Export for MONTHLY Expenses
-# -------------------------------
+# ===============================
+# EXPORT MONTHLY PDF
+# ===============================
 def export_monthly_pdf(request, month, year):
 
     transactions = Transaction.objects.filter(

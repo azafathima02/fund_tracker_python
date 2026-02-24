@@ -7,13 +7,10 @@
 <p class="text-muted">Manage & view your monthly expenses</p>
 
 <div class="d-flex gap-3 mb-3 flex-wrap">
-    <select class="form-select" style="max-width: 250px;">
-    <option disabled selected>Select Month</option>
-
+    <select class="form-select" style="max-width: 200px;">
+    <option selected disabled>Select Month</option>
     {% for m in months %}
-        <option value="{{ m.value }}">
-            {{ m.label }}
-        </option>
+        <option value="{{ m.value }}">{{ m.label }}</option>
     {% endfor %}
 </select>
 
