@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-g9n2)x=_7i8cm2th3#9tp20h_5s5sfx*+_qbb-#0&i7ubs0ild
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['fund-tracker-python.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
