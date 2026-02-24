@@ -17,7 +17,7 @@ def get_month_year_list():
     current_month = datetime.now().month
 
     months = []
-    for y in range(current_year - 3, current_year + 1):  # last 3 years + this year
+    for y in range(current_year + 1):  # last 3 years + this year
         for m in range(1, 13):
             if y == current_year and m > current_month:
                 break
