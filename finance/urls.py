@@ -16,4 +16,5 @@ urlpatterns = [
 
     path('export-monthly-pdf/<int:month>/<int:year>/', views.export_monthly_pdf, name='export_monthly_pdf'),
     
+    path('transactions/', views.all_transactions, name='all_transactions'),
     ]

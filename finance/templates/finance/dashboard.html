@@ -10,12 +10,26 @@
 <body class="bg-light">
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-dark bg-dark">
-    <div class="container-fluid">
-        <span class="navbar-brand mb-0 h1">Fund Tracker</span>
-        <a href="{% url 'add_transaction' %}" class="btn btn-outline-light">+ Add Transaction</a>
+<nav class="navbar navbar-dark bg-dark px-3">
+    <span class="navbar-brand">Fund Tracker</span>
+
+    <div class="d-flex gap-2">
+        <a href="{% url 'all_transactions' %}" class="btn btn-outline-light">
+            View Transactions
+        </a>
+
+        <a href="{% url 'add_transaction' %}" class="btn btn-outline-light">
+            + Add Transaction
+        </a>
     </div>
 </nav>
+
+<!-- <div class="d-flex justify-content-between align-items-center m mt-4">
+
+    <a href="{% url 'all_transactions' %}" class="btn btn-warning">
+        View All Transactions
+    </a>
+</div> -->
 
 <div class="container py-4">
 
@@ -32,10 +46,15 @@
         <div class="card-body">
 
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="m-0">Transactions</h4>
-                <a href="{% url 'export_monthly_pdf' current_month current_year %}" 
-                   class="btn btn-info">Download Monthly PDF</a>
-            </div>
+    <h4 class="m-0">Transactions</h4>
+
+    {% if current_month and current_year %}
+        <a href="{% url 'export_monthly_pdf' current_month current_year %}" 
+           class="btn btn-info">
+            Download Monthly PDF
+        </a>
+    {% endif %}
+</div>
 
             <table class="table table-striped text-center">
                 <thead class="table-dark">
