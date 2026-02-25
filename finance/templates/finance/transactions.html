@@ -7,16 +7,30 @@
 <p class="text-muted">Manage & view your monthly expenses</p>
 
 <div class="d-flex gap-3 mb-3 flex-wrap">
+
     <select class="form-select" style="max-width: 200px;">
-    <option selected disabled>Select Month</option>
-    {% for m in months %}
-        <option value="{{ m.value }}">{{ m.label }}</option>
-    {% endfor %}
-</select>
+        <option selected disabled>Select Month</option>
+        {% for m in months %}
+            <option value="{{ m.value }}">{{ m.label }}</option>
+        {% endfor %}
+    </select>
 
     <a href="{% url 'export-transactions-pdf' %}" 
        class="btn" style="background: var(--olive-depth); color:white;">⬇ Download PDF</a>
+
+    {% if current_month and current_year %}
+        <a href="{% url 'export_monthly_pdf' current_month current_year %}" 
+           class="btn btn-info">
+            Download Monthly PDF
+        </a>
+    {% else %}
+        <button class="btn btn-secondary" disabled>
+            Download Monthly PDF
+        </button>
+    {% endif %}
+
     <button class="btn" style="background: var(--olive-depth); color:white;" onclick="window.print()">🖨 Print</button>
+
 </div>
 
 <div class="card p-4 shadow-sm" style="border-radius: 14px;">

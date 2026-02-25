@@ -36,15 +36,19 @@ def dashboard(request):
             form.save()
             return redirect('dashboard')
 
+    # ✅ FIXED — ALWAYS PROVIDE VALID MONTH/YEAR
+    current_month = datetime.now().month
+    current_year = datetime.now().year
+
     context = {
         "transactions": transactions,
         "total_income": total_income,
         "total_expense": total_expense,
         "balance": balance,
         "form": form,
-        "months": get_month_list(),  # only months
-        "current_month": request.GET.get("month"),
-        "current_year": request.GET.get("year"),
+        "months": get_month_list(),
+        "current_month": current_month,
+        "current_year": current_year,
     }
 
     return render(request, "finance/dashboard.html", context)
@@ -112,7 +116,7 @@ def all_transactions(request):
     transactions = Transaction.objects.all().order_by('-date')
     return render(request, "finance/transactions.html", {
         "transactions": transactions,
-        "months": get_month_list(),  # ONLY MONTHS
+        "months": get_month_list(),
     })
 
 
@@ -134,7 +138,7 @@ def export_monthly_pdf(request, month, year):
     pdf = SimpleDocTemplate(response)
 
     data = [[f"{month_name[month]} {year} - Monthly Expenses"]]
-    data.append["ID", "Title", "Amount", "Category", "Date"]
+    data.append(["ID", "Title", "Amount", "Category", "Date"])  # ✅ FIXED
 
     for t in transactions:
         data.append([
